@@ -1,0 +1,202 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="contact__title">
+            <h1 class="text-center mt-4 p-3 text-white">Formulario de productos</h1>
+            <hr class="mb-4">
+        </div>
+        <div class="row ">
+            <div class="col-md-6 shadow rounded p-4 mb-4 bg-light">
+                <p>Agregue un nuevo producto:</p>
+                <form action="/productos" method="POST">
+                    <div class="contact__name">
+                        <div class="col mb-3 p-md-2">
+                            <label class="form-label"> Nombre</label>
+                            <input id="input_nombre" type="text" name="nombre" class="form-control" placeholder="Ej: Esmalte Top Coat">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"> Precio</label>
+                        <input id="input_precio" type="number" name="precio" class="form-control" placeholder="Ej: 1200">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Marca</label>
+                        <input id="input_marca" type="text" name="marca" class="form-control" placeholder="Ej: Semilla">
+                    </div>
+                    <input id="btn_add" class="btn btn-primary" type="submit" value="Enviar">
+                    <input class="btn btn-primary" type="reset" value="Limpiar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container-fluid">
+    <div class="container">
+        <div class="chat__title">
+            <h2 class=" mt-4 p-3 text-white">Chatea con otros usuarios</h2>
+            <hr class="mb-4">
+        </div>
+        <div  class="row ">
+            <div id="container_chat" class="col-md-6 shadow rounded p-4 mb-4 bg-light">
+                <p>Ingresá tu usuario:</p>
+                <form id="data_user">
+                    <div class="contact__name">
+                        <div class="col mb-3 p-md-2">
+                            <label class="form-label"> Nombre</label>
+                            <input type="text" name="name" class="form-control" placeholder="Escribe tu nombre">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" name="email" class="form-control" placeholder="Escribe tu correo" aria-label="email">
+                    </div>
+                    <input class="btn btn-primary btn-submit-mensaje" type="submit" value="Ingresar">
+                </form>
+                <hr>
+                <div>
+                    <div class="mb-3">
+                        <label class="form-label">Mensaje</label>
+                        <input id="input_mensaje" type="text" name="input_mensaje" class="form-control" placeholder="Escribe tu mensaje aquí" aria-label="mensaje">
+                    </div>
+                    <input id="btn_send" class="btn btn-primary " type="submit" value="Enviar mensaje">
+                    <input class="btn btn-primary" type="reset" value="Limpiar">
+                    <div class="container-fluid">
+                        <h3>Chat</h3>
+                        <div>
+                            <p id="parrafochat" style="background-color: #e2e2e2; color:black; padding: 20px 25px;"></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="" style="width:100%; max-width:600px; margin: 20px auto;">
+    <div>
+        <table class="table table-striped table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Imagen</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+        let socket = null;
+        let user = null;
+        let input_mensaje = document.getElementById("input_mensaje");
+        let btn_send = document.getElementById("btn_send");
+        let container_chat = document.getElementById("container_chat");
+        let parrafochat = document.getElementById("parrafochat");
+        let form_data_user = document.getElementById("data_user");
+        const btn_add = document.getElementById('btn_add');
+        const input_nombre = document.getElementById('input_nombre');
+        const input_precio = document.getElementById('input_precio');
+        const input_marca = document.getElementById('input_marca');
+
+        btn_add.addEventListener('click', (evt) => {
+            
+            const nombre = input_nombre.value;
+            const precio = input_precio.value;
+            const marca = input_marca.value;
+            
+            if (nombre !== '' && precio !== '' && marca !== '') {
+                socket.emit('productoAgregado',{
+                    "nombre": nombre,
+                    "precio": precio,
+                    "marca": marca
+                })
+            }
+        })
+
+        socket.on('listaActualizada', data => {
+            $('#table-body').empty();
+            data.forEach( (element) => {
+            
+                $('#table-body').append(
+                `
+                <tr>
+                    <td>${element.id}</td>
+                    <td>${element.nombre}</td>
+                    <td>${element.precio}</td>
+                    <td>${element.marca}</td>
+                </tr>
+                `
+                )
+            })
+            
+        })
+      
+        form_data_user.addEventListener("submit", evt => {
+            evt.preventDefault();
+            user = {
+                name: evt.target[0].value,
+                email: evt.target[1].value
+            }
+            if(user.name == "" || user.email == "" ) window.location.reload();
+            socket = io();
+            socket.emit("addUser", user)
+            container_chat.classList = "active";
+            readSockets()
+        })
+    
+        function readSockets(){
+            loadChat()
+            socket.on("listenserver", data => {
+                console.log("Recibiendo...", data);
+                loadData(data);
+            })
+        }
+    
+        function loadChat(){
+            socket.on('init', data => {
+                loadData(data);
+        })
+
+        socket.on("loadUsers", data => {
+            console.log("Evento loadUsers -->", data)
+        })
+        }
+    
+        function loadData(data){
+            let innerP = ``;
+                data.forEach(element => {
+                    innerP += `<b>${element.name}:</b> ${element.sms}</br>`
+                });
+                parrafochat.innerHTML = innerP; 
+        }
+    
+        btn_send.addEventListener("click", evt => {
+            let sendMessage = {
+                ...user,
+                sms: input_mensaje.value
+            }
+            socket.emit("mensaje", sendMessage)
+            input_mensaje.value = "";
+        })
+
+        
+
+
+       
+    </script>
+
+ 
+
+
+<!-- Bootstrap Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+</html>

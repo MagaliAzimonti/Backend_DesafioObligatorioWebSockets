@@ -1,0 +1,116 @@
+[
+  {
+    "nombre": "Crema de manos Neroli Orquideas",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 1
+  },
+  {
+    "nombre": "Crema de manos Neroli Orquideas",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 2
+  },
+  {
+    "nombre": "Crema de cuerpo Neroli Orquideas",
+    "precio": "2100",
+    "marca": "Semilla",
+    "id": 3
+  },
+  {
+    "nombre": "Esmalte Base Coat",
+    "precio": "1100",
+    "marca": "Semilla",
+    "id": 4
+  },
+  {
+    "nombre": "Esmalte Top Coat",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 5
+  },
+  {
+    "nombre": "Agua Micelar",
+    "precio": "1400",
+    "marca": "Semilla",
+    "id": 6
+  },
+  {
+    "nombre": "Crema de manos Neroli Orquideas",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 7
+  },
+  {
+    "nombre": "Crema de cuerpo Neroli Orquideas",
+    "precio": "2100",
+    "marca": "Semilla",
+    "id": 8
+  },
+  {
+    "nombre": "Esmalte citric power",
+    "precio": "800",
+    "marca": "Semilla",
+    "id": 9
+  },
+  {
+    "nombre": "Esmalte Citric Power",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 10
+  },
+  {
+    "nombre": "Esmalte Citric Power",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 11
+  },
+  {
+    "nombre": "Esmalte Citric Power",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 12
+  },
+  {
+    "nombre": "Esmalte Blue Ocean",
+    "precio": "800",
+    "marca": "Semilla",
+    "id": 13
+  },
+  {
+    "nombre": "Esmalte Deep Garnet",
+    "precio": "800",
+    "marca": "Semilla",
+    "id": 14
+  },
+  {
+    "nombre": "Esmalte Top Coat",
+    "precio": "1200",
+    "marca": "Semilla",
+    "id": 15
+  },
+  {
+    "nombre": "Esmalte Citric",
+    "precio": "800",
+    "marca": "Semilla",
+    "id": 16
+  },
+  {
+    "nombre": "Esmalte Top Coat",
+    "precio": "800",
+    "marca": "Semilla",
+    "id": 17
+  },
+  {
+    "nombre": "Esmalte Citric Power",
+    "precio": "1200",
+    "marca": "Semila",
+    "id": 18
+  },
+  {
+    "nombre": "Esmalte Citric Power",
+    "precio": "1200",
+    "marca": "Semila",
+    "id": 19
+  }
+]
